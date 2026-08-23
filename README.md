@@ -1,4 +1,17 @@
-# Gen1Follower — Gen 1 + Gen 2 overworld followers
+<p align="center">
+  <img src="docs/banner.png" alt="Gen1Follower" width="560">
+</p>
+
+<p align="center">
+  <b>Gen 1 + Gen 2 overworld followers, all 251 of them</b><br>
+  For <b>Pokémon Red, Blue, Yellow and Gold</b> on Gen1Recomp.
+</p>
+
+<p align="center">
+  <img src="docs/species.png" alt="the standing frame of all 251 follower sprites" width="920"><br>
+  <i>Every sprite that ships, #001 to #251, straight out of
+  <code>assets/sprites/</code>.</i>
+</p>
 
 An all-species overworld follower mod for **Pokémon Red, Blue, Yellow, and Gold (Gen1Recomp)**. Every Generation I Pokémon is supported out of the box; Gold supplies all 251 species natively, while Gen 1 can add Johto species through a compatible expansion such as **Crystal 251**.
 
@@ -23,6 +36,25 @@ Gen1Follower is a standalone build of the PokéPC Followers lineage, released un
   * In-place turning (no teleporting or jumping tiles when turning around).
   * Seamless map transition spawning across route seams and indoor/outdoor warps.
 
+### What a sheet holds
+
+Every species ships one 16x96 sheet: six frames, standing and stepping, for
+each way the follower can face.
+
+<p align="center">
+  <img src="docs/frames.png" alt="six whole sprite sheets, all frames" width="420">
+</p>
+
+The sheets on this page are redrawn from the committed sprites by
+
+```sh
+python3 tools/make_showcase.py          # every sheet
+python3 tools/make_showcase.py sizes    # ... or just the ones named
+```
+
+It needs `Pillow`, and fetches its label font from Google Fonts once into
+`tools/.cache/`, which is not committed.
+
 ---
 
 ## 📋 Installation
@@ -38,6 +70,12 @@ The manifest targets both `gen1` and `gen2`; no second Gold-specific copy of the
 > **Coming from `PokePCFollowers`?** Disable it before enabling Gen1Follower. The launcher treats them as two separate mods, and running both installs two copies of the same follower, renderer and party-menu hooks.
 
 ### Follower size options
+
+<p align="center">
+  <img src="docs/sizes.png" alt="follower sizes derived from Pokedex height" width="920"><br>
+  <i>The scale beside each name is this repo's own formula from
+  <code>main.lua</code> applied to that Pokémon's Pokédex height.</i>
+</p>
 
 `POKEDEX SIZES` enables or disables proportional follower sizes. `FOLLOWER SIZE`
 adjusts the result globally from 75% to 125%. The default 100% setting uses the
