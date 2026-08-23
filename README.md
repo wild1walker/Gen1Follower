@@ -1,6 +1,8 @@
 <p align="center">
-  <img src="docs/banner.png" alt="Gen1Follower" width="560">
+  <img src="docs/banner.png" alt="Gen1Wild" width="400">
 </p>
+
+<h1 align="center">Gen1Follower</h1>
 
 <p align="center">
   <b>Gen 1 + Gen 2 overworld followers, all 251 of them</b><br>
