@@ -35,6 +35,9 @@ Gen1Follower is a standalone build of the PokéPC Followers lineage, released un
   2. Choose any Pokémon in your party.
   3. Select the new **`FOLLOW?`** option (the current follower reads **`FOLLOWER`**).
   4. Your chosen Pokémon will instantly become your active follower!
+* **Walk Alone**: Select **`FOLLOWER`** on the Pokémon that is already
+  following you and it stops, leaving you with no follower at all. Pick
+  `FOLLOW?` on any party member to start again.
 * **Full-Color Overworld Graphics**: Sprites render with rich true-color graphics directly over 100% colorized overworld terrain tiles (grass, paths, dirt, water) with zero background artifacts.
 * **Pokédex-Proportional Sizes**: Followers use the height recorded in their Pokédex entry. A progressive and capped scale keeps the smallest Pokémon at least 11 px tall while making very large Pokémon clearly more imposing, without changing collision or movement.
 * **Smooth Movement Mechanics**:
@@ -131,6 +134,24 @@ walks behind you, which on Yellow begins as that same Pikachu.
 ## Gold support
 
 Gen1Follower targets the Gen 2 engine directly. It uses Gold's follower spawn seam, native 251-species Pokédex, Gen 2 sprite registry, and split icon sheet/species registry. Followers are hidden correctly while biking or surfing, and the Party Menu `FOLLOW?` action uses the same shared hook as Gen 1.
+
+## Walking with no follower
+
+`FOLLOW?` and `FOLLOWER` are the same menu entry in two states, and it is a
+toggle. `FOLLOW?` on any healthy party member makes that Pokémon your
+follower; `FOLLOWER`, which only ever appears on the Pokémon already walking
+behind you, ends the following. With it off nobody follows you: every party
+member reads `FOLLOW?` again, and the overworld tile behind you stays empty.
+
+Off means off. The choice is saved beside the follower selection, so it
+survives map transitions, save reloads and mod hot reloads, and swapping your
+party order or receiving a new lead Pokémon does not quietly bring a follower
+back. Only choosing `FOLLOW?` yourself does.
+
+This works the same on Red, Blue, Yellow and Gold. On Yellow the game's own
+spawn gate still passes while a healthy Pikachu is in the party, so the mod
+also removes the follower from the world directly rather than only declining
+to spawn it.
 
 ## Fainted lead handling
 
