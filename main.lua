@@ -920,25 +920,13 @@ return function(mod)
   end
 
   -- ----------------------------------------------------------------------
-  -- 12. Yellow‑specific story overrides (optional)
+  -- 12. Yellow's starter is Pikachu
   -- ----------------------------------------------------------------------
-  if isYellow then
-    mod.content.strings:override("PIKACHU", "CHARMANDER")
-    mod.content.text:override("_OaksLabPikachuDislikesPokeballsText1", "OAK: What?")
-    mod.content.text:override("_OaksLabPikachuDislikesPokeballsText2",
-      "OAK: It's strange!\nCHARMANDER hates being\nin a POKéBALL!\fYou should keep it\nwith you!\fIt should be happy\nif it walks with\nyou!")
-    mod.content.text:override("_OaksLabOak1YouShouldTalkToIt",
-      "OAK: Look at it!\nCHARMANDER seems to\nlike you!")
-
-    -- The encounter hook has the same contract on both generations.
-    mod.hooks:wrap("encounter.species", function(next, encounter, ctx)
-      local rolled = next(encounter, ctx)
-      if rolled and rolled.species == "PIKACHU" and rolled.level == 5 then
-        rolled.species = "CHARMANDER"
-      end
-      return rolled
-    end)
-  end
+  -- Nothing to do. Yellow's own starter story is left exactly as the cart
+  -- tells it: Oak's lines, the species you are handed, and its name are the
+  -- game's, not this mod's. A follower mod has no business rewriting them --
+  -- what it changes is which Pokemon walks behind you, and on Yellow that
+  -- still starts as the Pikachu Oak gives you.
 
   -- ----------------------------------------------------------------------
   -- 13. Hot‑reload restore state

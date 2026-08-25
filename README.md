@@ -110,7 +110,7 @@ The follower sprite is also marked `trueColor` for render-pipeline use so the vo
 
 ## Inter-mod compatibility
 
-The renderer, party-menu, follower and Yellow encounter wrappers are chain-safe. During a hot reload the mod restores a function only when its own wrapper is still the active outermost function, so wrappers installed by later-loading mods are not overwritten. This is intended for stacks containing Dramatic Sky Ride, Kanto Dive or the standalone Dramatic Deep Dive; those mods remain responsible for their own mount and underwater movement rules.
+The renderer, party-menu and follower wrappers are chain-safe. During a hot reload the mod restores a function only when its own wrapper is still the active outermost function, so wrappers installed by later-loading mods are not overwritten. This is intended for stacks containing Dramatic Sky Ride, Kanto Dive or the standalone Dramatic Deep Dive; those mods remain responsible for their own mount and underwater movement rules.
 
 When [Unique Menu Icons](https://github.com/menyas/unique-menu-icons) is also enabled, it owns the party-menu icon column and its color mode. Gen1Follower keeps providing the overworld follower and the `FOLLOW?` action, but stops marking the party rows as true color. Without Unique Menu Icons, Gen1Follower's own party icons remain the fallback. Use Unique Menu Icons 1.5.0 or newer; version 1.4.0 declares the PokéPC-lineage mod incompatible in its manifest.
 
@@ -124,7 +124,9 @@ The `__pokepc*`, `pokepcFollower*` and `ICON_POKEPC_` markers written onto engin
 
 The mod extends the follower entity to Pokémon Red and Pokémon Blue. The stock Gen 1 `PikachuFollower` spawn condition is Yellow/Pikachu-specific, so Gen1Follower supplies a version-neutral healthy-party condition while retaining the engine's native trailing, ledge and map-transition behavior.
 
-Yellow-only Oak story/encounter overrides remain restricted to Yellow and are not applied to Red, Blue, or Gold.
+On Yellow the starter story is left alone. Oak's lines, the species he hands
+you and its name are the game's own; this mod only decides which Pokémon
+walks behind you, which on Yellow begins as that same Pikachu.
 
 ## Gold support
 

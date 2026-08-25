@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.1.0 - 2026-08-25
+
+### Removed
+- **Yellow's starter is Pikachu again.** The mod no longer rewrites Yellow's
+  opening: it had renamed the `PIKACHU` string to `CHARMANDER`, replaced three
+  of Oak's lab lines, and wrapped `encounter.species` to turn the level-5
+  Pikachu roll into a Charmander. That ran on every Yellow save with no option
+  to switch it off, which made installing a follower mod silently change the
+  starter you were given. Deciding which Pokemon walks behind you is this
+  mod's job; deciding which one Oak hands you is not.
+
+  Red, Blue and Gold are unaffected — the block was already Yellow-only. On
+  Yellow, the native spawn-gate shim and the vanilla-talk path for the starter
+  Pikachu are unchanged, so the follower itself behaves exactly as before.
+
 ## 1.0.0 - 2026-08-23
 
 First release of **Gen1Follower**, a standalone all-species overworld follower
