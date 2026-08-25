@@ -21,5 +21,27 @@
     "Animated overworld walking frames enabled for all follower sprites",
     "Gen1Recomp 0.1.86+ sandbox-compatible bootstrap and scoped asset paths"
   ],
-  "description": "All 251 Gen 1 and Gen 2 overworld followers with Crystal 251 and Dramatic Shape voxel/tilt compatibility for Red, Blue, Yellow, and Gold. Version 1.2.0 adds a party-menu toggle for walking with no follower at all, is compatible with the Gen1Recomp 0.1.86+ mod sandbox, spawns the follower correctly even when the party lead is fainted, and leaves Yellow's starter Pikachu exactly as the game gives it."
+  "description": "All 251 Gen 1 and Gen 2 overworld followers with Crystal 251 and Dramatic Shape voxel/tilt compatibility for Red, Blue, Yellow, and Gold. Version 1.2.0 adds a party-menu toggle for walking with no follower at all, is compatible with the Gen1Recomp 0.1.86+ mod sandbox, spawns the follower correctly even when the party lead is fainted, and leaves Yellow's starter Pikachu exactly as the game gives it.",
+  "credits": [
+    {
+      "who": "Antigravity & gamecorner33",
+      "for_": "PokePC Followers (mfrtechconsult/PokePCFollowers), the codebase this mod is built from -- its follower mechanics, fixes and compatibility work are all still here"
+    },
+    {
+      "who": "ShockSlayer and the Pokemon Crystal Clear team",
+      "for_": "the GSC-style overworld follower art the Generation II sheets descend from"
+    },
+    {
+      "who": "the PokePC / Followers EX lineage",
+      "for_": "the follower-sprite lineage those sheets come through"
+    },
+    {
+      "who": "Wilds of Kanto (YoDrehDenSwagAuf/overworld-spawn-mod)",
+      "for_": "the Poke Followers pack the Generation II sheets are distributed in"
+    },
+    {
+      "who": "Gen1Recomp",
+      "for_": "the renderer, party and sandbox seams this mod hooks"
+    }
+  ]
 }
