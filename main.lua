@@ -276,8 +276,41 @@ return function(mod)
     }, ":")
   end
 
+  -- Following can also be switched off entirely. Choosing FOLLOWER on the
+  -- Pokemon that is already following stops it, which leaves the player with
+  -- no follower at all until another party member is picked. The switch is
+  -- stored next to the selection so it survives map changes, saves and hot
+  -- reloads, and so a new party lead does not quietly bring a follower back.
+  --
+  -- The stored value is read lazily, exactly like the selection itself: mod
+  -- save data is not necessarily loaded yet while the mod is initializing.
+  -- The local mirror is what answers before anything has been written, and on
+  -- builds whose mod API has no save store at all.
+  local followingOff = false
+
+  local function followingDisabled()
+    if mod.save then
+      local ok, stored = pcall(mod.save.get, mod.save, "follower_disabled")
+      if ok and stored ~= nil then
+        return stored == true or stored == 1 or stored == "true"
+      end
+    end
+    return followingOff
+  end
+
+  local function setFollowingDisabled(disabled)
+    disabled = disabled and true or false
+    followingOff = disabled
+    if mod.save then
+      pcall(mod.save.set, mod.save, "follower_disabled", disabled)
+    end
+  end
+
   -- Returns the currently selected follower mon and its party slot
   local function getActiveFollowerMon(game, needHealthy)
+    -- No follower selected at all: every caller -- spawn gate, renderer,
+    -- party-menu label and live sync -- reads this as "nobody follows".
+    if followingDisabled() then return nil end
     if not (game and game.save and game.save.party) then return nil end
     local party = game.save.party
     if #party == 0 then return nil end
@@ -541,6 +574,9 @@ return function(mod)
 
   -- starterInParty – return any healthy mon, not just Pikachu
   local function wrappedStarterInParty(save, needHealthy)
+    -- With following switched off there is no follower mon to report, so the
+    -- native spawn path finds nothing to put behind the player either.
+    if followingDisabled() then return nil end
     local game = liveGame()
     local active = getActiveFollowerMon(game, needHealthy)
     if active then return active end
@@ -843,14 +879,19 @@ return function(mod)
     local follower = PikachuFollower.current(ow)
     if not follower then return end
     local active = getActiveFollowerMon(game, true)
-    if not active then return end
+    if not active then
+      -- Following was just switched off (or the whole party fainted) while the
+      -- menu is open: drop the entity now so backing out shows an empty tile.
+      purgeFollowerEntities(ow)
+      return
+    end
     if follower._pokepcFollowerSpecies ~= active.species then
       syncLiveFollowerDef(game, ow)
     end
   end
 
   -- ----------------------------------------------------------------------
-  -- 11. Party submenu hook (FOLLOW? / FOLLOWER)
+  -- 11. Party submenu hook (FOLLOW? / FOLLOWER toggle)
   -- ----------------------------------------------------------------------
   local function selectFollower(mon, game, quiet)
     if not (mon and game and healthy(mon)) then return false end
@@ -861,6 +902,7 @@ return function(mod)
     end
     if not slot then return false end
 
+    setFollowingDisabled(false)
     if mod.save then
       mod.save:set("selected_mon", monKey(mon))
       mod.save:set("selected_slot", slot)
@@ -880,6 +922,57 @@ return function(mod)
     return true
   end
 
+  -- Choosing FOLLOWER on the Pokemon that is already following turns the
+  -- follower off instead of re-selecting the mon that is already selected.
+  -- The stored selection is cleared with it, so nothing stale can resurface:
+  -- the switch is the only thing that decides there is no follower, and any
+  -- FOLLOW? afterwards both clears the switch and stores a fresh selection.
+  local function stopFollowing(mon, game, quiet)
+    if not game then return false end
+    local was = mon or getActiveFollowerMon(game, true)
+
+    setFollowingDisabled(true)
+    if mod.save then
+      pcall(mod.save.set, mod.save, "selected_mon", nil)
+      pcall(mod.save.set, mod.save, "selected_slot", nil)
+    end
+    if game.save then
+      game.save.followerPartyIndex = nil
+      game.save.followerSpecies = nil
+    end
+
+    -- Remove the entity now rather than waiting for the next follower update:
+    -- on Yellow the native spawn gate still passes with a healthy Pikachu in
+    -- the party, so the follower has to be taken out of the world explicitly.
+    purgeFollowerEntities(worldFor(game))
+
+    if not quiet then
+      pcall(Sound.play, game.data, "Swap")
+      local text
+      if was then
+        local def = game.data and game.data.pokemon
+          and game.data.pokemon[was.species]
+        local name = was.nickname or (def and def.name) or was.species
+        text = Strings("%s stopped\nfollowing you!", name)
+      else
+        text = Strings("No POKeMON is\nfollowing you!")
+      end
+      game.stack:push(TextBox.new(game, text))
+    end
+    return true
+  end
+
+  -- One action for both menu paths, resolved when the player presses A
+  -- rather than when the list was built: FOLLOWER on the mon that is
+  -- currently following stops it, anything else starts following that mon.
+  local function followerAction(mon, game)
+    local current = getActiveFollowerMon(game, true)
+    if current and current == mon then
+      return stopFollowing(mon, game, false)
+    end
+    return selectFollower(mon, game, false)
+  end
+
   -- Use mod.hooks:wrap to add the menu item (preferred method)
   if mod.hooks then
     mod.hooks:wrap("ui.party.submenu", function(next, game, items, mon, ctx)
@@ -895,7 +988,7 @@ return function(mod)
       out[#out + 1] = {
         label = label,
         onSelect = function(selected, selectedGame)
-          selectFollower(selected, selectedGame, false)
+          followerAction(selected, selectedGame or game)
         end,
       }
       return out
@@ -913,7 +1006,7 @@ return function(mod)
       table.insert(e.items, {
         label = label,
         onSelect = function(selectedMon, game)
-          selectFollower(selectedMon, game, false)
+          followerAction(selectedMon, game or e.game)
         end
       })
     end)
@@ -1022,6 +1115,8 @@ return function(mod)
     mod.exports.shouldSpawn = shouldSpawn
     mod.exports.sync = syncLiveFollowerDef
     mod.exports.select = selectFollower
+    mod.exports.stop = function(game) return stopFollowing(nil, game, true) end
+    mod.exports.followingDisabled = followingDisabled
     mod.exports.restore = state.restore
   end
 

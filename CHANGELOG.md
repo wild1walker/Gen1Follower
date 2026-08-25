@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.2.0 - 2026-08-25
+
+### Added
+- **Turning the follower off from the party menu.** `FOLLOWER` — the label the
+  party submenu already shows on the Pokémon walking behind you — is now a
+  toggle rather than a re-selection of the Pokémon that is already selected.
+  Choosing it ends the following and leaves you with no follower at all; every
+  party member then reads `FOLLOW?` again, and picking one starts a follower
+  back up.
+
+  The switch is saved next to the follower selection, so it survives map
+  transitions, save reloads and hot reloads, and a party reorder or a new lead
+  Pokémon no longer brings a follower back on its own. Red, Blue, Yellow and
+  Gold all behave the same way; on Yellow, where the game's own spawn gate
+  still passes with a healthy Pikachu in the party, the follower is also
+  removed from the world rather than merely not spawned.
+
 ## 1.1.0 - 2026-08-25
 
 ### Removed
