@@ -2,7 +2,7 @@
   "title": "Gen1Follower",
   "summary": "All 251 Gen 1 and Gen 2 overworld followers with Gold, Crystal 251 and voxel/tilt compatibility.",
   "author": "wild1walker",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "tags": [
     "graphics",
     "followers",
@@ -20,5 +20,5 @@
     "Animated overworld walking frames enabled for all follower sprites",
     "Gen1Recomp 0.1.86+ sandbox-compatible bootstrap and scoped asset paths"
   ],
-  "description": "All 251 Gen 1 and Gen 2 overworld followers with Crystal 251 and Dramatic Shape voxel/tilt compatibility for Red, Blue, Yellow, and Gold. Version 1.0.0 is compatible with the Gen1Recomp 0.1.86+ mod sandbox and spawns the follower correctly even when the party lead is fainted."
+  "description": "All 251 Gen 1 and Gen 2 overworld followers with Crystal 251 and Dramatic Shape voxel/tilt compatibility for Red, Blue, Yellow, and Gold. Version 1.1.0 is compatible with the Gen1Recomp 0.1.86+ mod sandbox, spawns the follower correctly even when the party lead is fainted, and leaves Yellow's starter Pikachu exactly as the game gives it."
 }
