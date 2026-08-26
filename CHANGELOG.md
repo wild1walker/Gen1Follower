@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.2.1 - 2026-08-26
 
 ### Fixed
 - **Followers darken with the rest of a dark cave.** Rock Tunnel and the other
