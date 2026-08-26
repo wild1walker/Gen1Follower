@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.2.1 - 2026-08-26
+
+### Fixed
+- **Followers darken with the rest of a dark cave.** Rock Tunnel and the other
+  unlit floors black out every sprite on screen — Gen 1 arms `FadePal2`, whose
+  `rOBP0` write lands every object colour on shade 3, and Gen 2 loads the
+  DARKNESS palette set — so the player, NPCs and item balls are silhouettes
+  until `FLASH`. Full-colour follower art reached the screen past both of
+  them, either replayed unshaded on top of the colorized pass or exempted
+  from it by a true-colour rect, and the follower kept walking around in
+  daylight colours beside a blacked-out player.
+
+  In an unlit frame the follower is now painted in the same shade the engine
+  leaves the player: shade 3 of the palette that frame colours objects with,
+  at whatever Pokédex size the follower already had. A battle drawn over a
+  dark map still comes out lit, exactly as the engine draws that frame, and
+  `FLASH` brings the follower's own colours back with everything else.
+
 ## 1.2.0 - 2026-08-25
 
 ### Added
