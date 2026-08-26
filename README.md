@@ -38,7 +38,7 @@ Gen1Follower is a standalone build of the PokéPC Followers lineage, released un
 * **Walk Alone**: Select **`FOLLOWER`** on the Pokémon that is already
   following you and it stops, leaving you with no follower at all. Pick
   `FOLLOW?` on any party member to start again.
-* **Full-Color Overworld Graphics**: Sprites render with rich true-color graphics directly over 100% colorized overworld terrain tiles (grass, paths, dirt, water) with zero background artifacts.
+* **Full-Color Overworld Graphics**: Sprites render with rich true-color graphics directly over 100% colorized overworld terrain tiles (grass, paths, dirt, water) with zero background artifacts. An unlit cave floor still darkens the follower with everything else — it goes to the same silhouette the player does until `FLASH`.
 * **Pokédex-Proportional Sizes**: Followers use the height recorded in their Pokédex entry. A progressive and capped scale keeps the smallest Pokémon at least 11 px tall while making very large Pokémon clearly more imposing, without changing collision or movement.
 * **Smooth Movement Mechanics**:
   * Smooth 1-tile trailing behind the player.
