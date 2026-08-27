@@ -1,3 +1,8 @@
 # The release workflow builds its .zip from `git archive HEAD`, so anything
 # marked export-ignore here stays out of what players install.
 docs/ export-ignore
+
+# The test harness stubs the engine so the map-POKeMON table can be checked
+# without the game. It is for this repository, not for the mods/ folder a
+# player unzips into.
+tests/ export-ignore

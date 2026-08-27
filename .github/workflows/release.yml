@@ -13,6 +13,9 @@ on:
       - mod.card
       - CHANGELOG.md
       - RELEASE_NOTES_*.md
+      # export-ignore decides what `git archive` puts in the zip, so a change
+      # here changes what players install and has to republish like any other.
+      - .gitattributes
       - .github/workflows/release.yml
   workflow_dispatch:
 
@@ -131,6 +134,17 @@ jobs:
             echo "stale tracked mod.zip leaked into release" >&2
             exit 1
           fi
+          # The repository's own material -- the README's screenshots and the
+          # engine-stubbing test harness -- is export-ignored in .gitattributes
+          # and has no business in what a player unzips into mods/. Assert it
+          # rather than trust the attribute, so dropping a line there fails the
+          # release instead of quietly fattening it.
+          for tree in docs tests; do
+            if unzip -Z1 "$ARCHIVE" | grep -q "^$tree/"; then
+              echo "$tree/ is export-ignored but reached the release" >&2
+              exit 1
+            fi
+          done
           unzip -t "$ARCHIVE"
 
       - name: Validate exact release ZIP
