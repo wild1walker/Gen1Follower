@@ -41,13 +41,16 @@ Gen1Follower is a standalone build of the PokéPC Followers lineage, released un
 * **The Map's Own Pokémon Match**: Gen 1 draws every Pokémon that is part of a
   map from one of five shared sheets — a "monster", a "bird", a "fairy", a
   "seel" and the one Snorlax — so one sprite is Mewtwo, a Meowth and a Machop
-  at once. The forty-nine that have a species now draw from the very sheet
-  this mod would give them as a follower, at the same Pokédex-proportional
-  size: the Pokémon Fan Club's Pikachu, both sleeping Snorlax, Mewtwo, the
-  three legendary birds, every Pokémon Center's Chansey and the rest. Bill's
-  fused form (the game never says which Pokémon), the Copycat's three dolls
-  and the Power Plant's disguised Voltorb are left exactly as the cart draws
-  them. One switch, `MAP POKEMON`, turns the whole thing off.
+  at once. Fifty of them now draw from the very sheet this mod would give them
+  as a follower, at the same Pokédex-proportional size: the Pokémon Fan Club's
+  Pikachu, both sleeping Snorlax, Mewtwo, the three legendary birds, every
+  Pokémon Center's Chansey, Bill's fused form and the rest. The Copycat's three
+  dolls and the Power Plant's disguised Voltorb are left exactly as the cart
+  draws them. One switch, `MAP POKEMON`, turns the whole thing off.
+
+  Bill is the one entry the game cannot settle — he only says he "got combined
+  with a #MON" — so he is Kabuto by choice, after the shell he wears in the
+  anime. It is one word in `OVERWORLD_MON_SPECIES` if you disagree.
 * **Full-Color Overworld Graphics**: Sprites render with rich true-color graphics directly over 100% colorized overworld terrain tiles (grass, paths, dirt, water) with zero background artifacts. An unlit cave floor still darkens the follower with everything else — it goes to the same silhouette the player does until `FLASH`.
 * **Pokédex-Proportional Sizes**: Followers use the height recorded in their Pokédex entry. A progressive and capped scale keeps the smallest Pokémon at least 11 px tall while making very large Pokémon clearly more imposing, without changing collision or movement.
 * **Smooth Movement Mechanics**:
@@ -66,7 +69,7 @@ each way the follower can face.
 
 ### Checks
 
-The map-Pokémon table is forty-nine hand-checked entries, so it has a test:
+The map-Pokémon table is fifty hand-checked entries, so it has a test:
 
 ```sh
 lua5.4 tests/run.lua

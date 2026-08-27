@@ -444,10 +444,7 @@ return function(mod)
   -- so the NAME picks the sheet here. The sprite id cannot: losing the species
   -- is the very thing it does.
   --
-  -- Four of the 53 are deliberately absent:
-  --   BILLSHOUSE_BILL_POKEMON  Bill "got combined with a #MON" and the game
-  --                            never says which. There is no species to draw,
-  --                            so he keeps the sheet the cart gives him.
+  -- Three of the 53 are deliberately absent:
   --   COPYCATSHOUSE2F_MONSTER  the three in the Copycat's room are dolls, and
   --   COPYCATSHOUSE2F_BIRD     the joke is that they are ("This is a rare
   --   COPYCATSHOUSE2F_FAIRY    #MON! Huh? It's only a doll!"). Real art gives
@@ -455,7 +452,15 @@ return function(mod)
   -- The Power Plant's Voltorb and Electrode are absent too, and not by
   -- oversight: they wear SPRITE_POKE_BALL because they are pretending to be
   -- item balls, which is the whole trap.
+  --
+  -- One entry below is a choice rather than a reading. Bill only ever says he
+  -- "got combined with a #MON" and the cart never names it, so BILL_POKEMON is
+  -- the one row here that no game data can settle. It is Kabuto by decision --
+  -- the shell Bill spends his anime appearance stuck inside -- and it is a
+  -- one-word edit for anyone who would rather he were something else.
   local OVERWORLD_MON_SPECIES = {
+    -- Not from the game: see the note above. Bill's fused form has no species.
+    BILLSHOUSE_BILL_POKEMON = "KABUTO",
     CELADONCITY_POLIWRATH = "POLIWRATH",
     CELADONMANSION1F_CLEFAIRY = "CLEFAIRY",
     CELADONMANSION1F_MEOWTH = "MEOWTH",

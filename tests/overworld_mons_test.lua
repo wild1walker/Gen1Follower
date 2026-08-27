@@ -15,7 +15,7 @@ end
 print("\n== registered records ==")
 local n = 0
 for id in pairs(h.sprites) do if id:find("^SPRITE_GEN1FOLLOWER_MON_") then n = n + 1 end end
-check("one record per distinct species (32)", n == 32, n)
+check("one record per distinct species (33)", n == 33, n)
 check("Pikachu record points at follower_025.png",
   (h.sprites.SPRITE_GEN1FOLLOWER_MON_025 or {}).image
     == "./assets/sprites/follower_025.png",
@@ -36,11 +36,11 @@ local snorlax = build("ROUTE_12",
     range = "DOWN", name = "ROUTE12_SNORLAX" })
 check("Route 12 Snorlax is follower_143", sheet(snorlax):find("follower_143") ~= nil, sheet(snorlax))
 
+-- The one row no game data settles: Bill's fused form is Kabuto by decision.
 local bill = build("BILLS_HOUSE",
   { index = 1, x = 6, y = 5, sprite = "SPRITE_MONSTER", movement = "STAY",
     range = "NONE", name = "BILLSHOUSE_BILL_POKEMON" })
-check("Bill's fused form keeps the cart's sheet (no species to draw)",
-  not isFollowerArt(bill), sheet(bill))
+check("Bill's fused form is Kabuto", sheet(bill):find("follower_140") ~= nil, sheet(bill))
 
 print("\n== the ones that must NOT change ==")
 local doll = build("COPYCATS_HOUSE_2F",

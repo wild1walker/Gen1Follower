@@ -11,7 +11,7 @@
   follower came from this mod's own 251 sheets still walked past Pokémon in
   the cart's generic art, and the two never matched.
 
-  Forty-nine map objects across Red, Blue and Yellow now draw from the same
+  Fifty map objects across Red, Blue and Yellow now draw from the same
   sheet the mod would give that species as a follower, at the same
   Pokédex-proportional size and in the same full colour — the Fan Club's
   Pikachu and Seel, both sleeping Snorlax, Mewtwo, Articuno, Zapdos, Moltres,
@@ -20,12 +20,17 @@
   own name, so a Pidgey stays a Pidgey and a Pidgeot a Pidgeot even though the
   cart draws both from the one bird.
 
-  Four Pokémon-shaped objects are deliberately left as they are. Bill's fused
-  form has no species — the game only says he "got combined with a #MON" — so
-  there is nothing to draw him as. The monster, bird and fairy in the
-  Copycat's room are dolls, and her joke is that they are. The Power Plant's
-  Voltorb and Electrode are not touched either: they wear the item-ball sprite
-  because they are pretending to be item balls, which is the trap.
+  Three Pokémon-shaped objects are deliberately left as they are. The monster,
+  bird and fairy in the Copycat's room are dolls, and her joke is that they
+  are. The Power Plant's Voltorb and Electrode are not touched either: they
+  wear the item-ball sprite because they are pretending to be item balls,
+  which is the trap.
+
+  One of the fifty is a decision rather than a reading. Bill only ever says he
+  "got combined with a #MON" and the game never names it, so there is no data
+  to settle what he should be drawn as; he is Kabuto here — the shell he spends
+  his anime appearance stuck inside — and that is a one-word edit in the table
+  for anyone who would rather he were something else.
 
   On Gold the same thing happens one level up. Its overworld Pokémon already
   name their species, but they borrow that species' shared party-menu icon for

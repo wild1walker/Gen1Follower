@@ -22,7 +22,7 @@
     "Gen1Recomp 0.1.86+ sandbox-compatible bootstrap and scoped asset paths",
     "Map Pokémon drawn from the same 251 sheets, not the cart's shared ones"
   ],
-  "description": "All 251 Gen 1 and Gen 2 overworld followers with Crystal 251 and Dramatic Shape voxel/tilt compatibility for Red, Blue, Yellow, and Gold. Version 1.3.0 gives the Pokémon standing on the maps the same sheets the follower wears -- the Fan Club's Pikachu, both sleeping Snorlax, Mewtwo and the three legendary birds stop sharing the cart's four generic 'monster', 'bird', 'fairy' and 'seel' sheets -- on top of 1.2.1's unlit-cave darkening and 1.2.0's party-menu toggle for walking with no follower at all.",
+  "description": "All 251 Gen 1 and Gen 2 overworld followers with Crystal 251 and Dramatic Shape voxel/tilt compatibility for Red, Blue, Yellow, and Gold. Version 1.3.0 gives the Pokémon standing on the maps the same sheets the follower wears -- the Fan Club's Pikachu, both sleeping Snorlax, Mewtwo, Bill's fused form and the three legendary birds stop sharing the cart's four generic 'monster', 'bird', 'fairy' and 'seel' sheets -- on top of 1.2.1's unlit-cave darkening and 1.2.0's party-menu toggle for walking with no follower at all.",
   "credits": [
     {
       "who": "Antigravity & gamecorner33",
