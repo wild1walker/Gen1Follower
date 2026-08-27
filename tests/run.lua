@@ -1,24 +1,30 @@
--- Every test in this directory, from the repository root:
+-- Every suite in this directory:
 --
---   lua5.4 tests/run.lua
+--   lua5.4 tests/run.lua        (luajit tests/run.lua works too)
 --
--- Each file runs in its own process-like scope because the harness loads
--- main.lua fresh and the mod installs global wrappers; G1F_TEST_GEN picks
--- which generation the stubbed engine reports.
+-- Each suite runs in its own process because the harness loads main.lua fresh
+-- and the mod installs wrappers onto the engine tables it is handed.
+--
+-- The suites are self-contained -- each finds the harness from its own path
+-- and names its own generation -- so the bundle repositories, which run every
+-- vendored mod's tests/*.lua directly, get the same result this does. This
+-- runner is a convenience, not the only way in.
+local HERE = (arg and arg[0] or ""):match("^(.*)[/\\][^/\\]*$") or "."
+
 local suites = {
-  { file = "tests/overworld_mons_test.lua", gen = "1", name = "map POKeMON, Gen 1" },
-  { file = "tests/overworld_mons_gen2_test.lua", gen = "2", name = "map POKeMON, Gold" },
+  { file = "overworld_mons_test.lua", name = "map POKeMON, Gen 1" },
+  { file = "overworld_mons_gen2_test.lua", name = "map POKeMON, Gold" },
 }
 
-local lua = arg[-1] or "lua5.4"
+local lua = arg and arg[-1] or "lua5.4"
 local failed = 0
 for _, suite in ipairs(suites) do
-  print(("\n=== %s (%s) ==="):format(suite.name, suite.file))
-  local cmd = ("G1F_TEST_GEN=%s %s %s"):format(suite.gen, lua, suite.file)
-  local ok, how, code = os.execute(cmd)
+  print(("\n=== %s (tests/%s) ==="):format(suite.name, suite.file))
+  local ok = os.execute(("%s %s/%s"):format(lua, HERE, suite.file))
+  -- 5.1 hands back a status number; 5.4 hands back a boolean and a reason.
   if not (ok == true or ok == 0) then
     failed = failed + 1
-    print(("!!! %s failed (%s %s)"):format(suite.file, tostring(how), tostring(code)))
+    print(("!!! tests/%s failed"):format(suite.file))
   end
 end
 

@@ -1,4 +1,9 @@
-local h = dofile("tests/harness.lua")
+-- Finds the harness from THIS file's path rather than the working directory,
+-- and names its own generation rather than reading one out of the environment:
+-- the bundle repositories run each vendored mod's suites directly, from a
+-- directory of their choosing and with no variables set.
+local HERE = (arg and arg[0] or ""):match("^(.*)[/\\][^/\\]*$") or "."
+local h = assert(loadfile(HERE .. "/support/harness.lua"))(HERE .. "/..", 1)
 local fails, checks = 0, 0
 local function check(name, cond, extra)
   checks = checks + 1
@@ -18,7 +23,7 @@ for id in pairs(h.sprites) do if id:find("^SPRITE_GEN1FOLLOWER_MON_") then n = n
 check("one record per distinct species (33)", n == 33, n)
 check("Pikachu record points at follower_025.png",
   (h.sprites.SPRITE_GEN1FOLLOWER_MON_025 or {}).image
-    == "./assets/sprites/follower_025.png",
+    == (HERE .. "/../assets/sprites/follower_025.png"),
   (h.sprites.SPRITE_GEN1FOLLOWER_MON_025 or {}).image)
 check("records are 6-frame walkers",
   (h.sprites.SPRITE_GEN1FOLLOWER_MON_143 or {}).frames == 6
@@ -95,7 +100,7 @@ check("a map POKeMON goes through the mod's own draw", #h.drawn == before + 1
   and h.drawn[#h.drawn].vanilla == nil, h.drawn[#h.drawn].vanilla)
 check("...painting the follower sheet",
   (h.drawn[#h.drawn].image or {}).path
-    == "./assets/sprites/follower_025.png",
+    == (HERE .. "/../assets/sprites/follower_025.png"),
   (h.drawn[#h.drawn].image or {}).path)
 before = #h.drawn
 human.sprite:draw(96, 64, 0, 0, "down", 0, false)
@@ -128,7 +133,7 @@ check("the follower still draws through the mod, not the engine",
   h.drawn[#h.drawn].vanilla == nil)
 check("...painting its own species' sheet",
   (h.drawn[#h.drawn].image or {}).path
-    == "./assets/sprites/follower_004.png",
+    == (HERE .. "/../assets/sprites/follower_004.png"),
   (h.drawn[#h.drawn].image or {}).path)
 check("...from the down-facing STAND frame",
   h.drawn[#h.drawn].quad[2] == 0, h.drawn[#h.drawn].quad[2])

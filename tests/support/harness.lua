@@ -4,9 +4,16 @@
 -- it proves which sheet an object is given and which draw path runs, and
 -- nothing at all about how any of it looks on screen.
 --
--- Run from the repository root:  lua5.4 tests/run.lua
-local MODROOT = os.getenv("G1F_ROOT") or "."
-local GEN = tonumber(os.getenv("G1F_TEST_GEN") or "1")
+-- Runs under Lua 5.4 and under LuaJIT, which is what the bundle repositories
+-- have. Run the suites from the repository root:  lua5.4 tests/run.lua
+-- The repository root and the generation the stubbed engine reports, passed
+-- in by the suite that loads this. A suite finds them from its OWN path, not
+-- from the working directory: the bundle repositories run these files from
+-- wherever they staged the mod, and a cwd-relative path fails there while
+-- passing here.
+local MODROOT, GEN = ...
+MODROOT = MODROOT or "."
+GEN = tonumber(GEN) or 1
 
 local drawn = {}          -- what wrappedSpriteDraw painted, in order
 local SpriteRenderer = {

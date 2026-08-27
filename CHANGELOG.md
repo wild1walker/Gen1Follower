@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.3.1 - 2026-08-27
+
+### Fixed
+- **The test suites run from anywhere, and under LuaJIT.** They resolved the
+  harness and the sprite paths against the working directory and read the
+  generation out of an environment variable, which is fine from this
+  repository's root and wrong everywhere else. The bundles that vendor this mod
+  run each mod's `tests/*.lua` themselves, staged at a path of their choosing
+  and with no variables set, so all four files failed there and reported this
+  mod's passing tests as failures in Gen1WildQOL's CI.
+
+  Each suite now finds the harness from its own path and names its own
+  generation, so it gives the same answer wherever it is run from and under
+  either interpreter. The harness moved to `tests/support/` so that a bundle
+  globbing `tests/*.lua` picks up the two suites and the runner rather than a
+  library that was never meant to be run on its own.
+
+  No change to the mod. `lua5.4 tests/run.lua` is still the way in, and the
+  1.3.0 behaviour is untouched.
+
 ## 1.3.0 - 2026-08-27
 
 ### Added
