@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.3.2 - 2026-08-27
+
+### Fixed
+- **Map POKéMON no longer flip back and forth on the spot.** A Pokémon standing
+  on a map would mirror itself left-to-right and back as you walked around it,
+  looking like it was trying to play a walk animation without going anywhere.
+
+  This mod's draw path mirrors an up- or down-facing sprite whenever the engine
+  hands it `stepFlip`. The engine's own rule is narrower: it mirrors only on
+  the *stepping* half of a stride. `stepFlip` is not a stride — an NPC toggles
+  it when a step **ends** and then stands there holding it — so a wandering
+  Pokémon that had taken an odd number of steps stood permanently mirrored
+  until its next step turned it back, and mirrored on both halves of every
+  stride it did take.
+
+  The pose is now the engine's, rule for rule: the walk frames gated on the
+  sheet being a walker, the up/down mirror gated on the stepping half, and
+  right-facing the mirror of left at any phase. Six tests pin it, and they fail
+  against the old rule.
+
+  The follower had the same rule and the same latent flip, hidden by walking in
+  step with the player; it is fixed too.
+
 ## 1.3.1 - 2026-08-27
 
 ### Fixed

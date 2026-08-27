@@ -119,6 +119,37 @@ check("option off: an already-built one draws vanilla too",
   h.drawn[#h.drawn].vanilla == true)
 h.options.overworld_mon_sprites = true
 
+print("\n== the mirror follows the engine's rules ==")
+-- stepFlip is not a stride: an NPC toggles it when a step ENDS and then holds
+-- it while standing, so mirroring on the flag alone leaves a standing POKeMON
+-- mirrored until its next step turns it back -- a sprite walking on the spot.
+local function sx(npc, facing, walkPhase, stepFlip)
+  local before = #h.drawn
+  npc.sprite:draw(96, 64, 0, 0, facing, walkPhase, stepFlip)
+  assert(#h.drawn > before, "nothing was drawn")
+  return h.drawn[#h.drawn].sx
+end
+local function frameOf(npc, facing, walkPhase, stepFlip)
+  npc.sprite:draw(96, 64, 0, 0, facing, walkPhase, stepFlip)
+  return h.drawn[#h.drawn].quad[2] / 16
+end
+
+check("standing, stepFlip set: NOT mirrored", sx(pika, "down", 0, true) > 0,
+  sx(pika, "down", 0, true))
+check("standing, stepFlip clear: not mirrored", sx(pika, "down", 0, false) > 0)
+check("stepping, stepFlip set: mirrored", sx(pika, "down", 1, true) < 0)
+check("stepping, stepFlip clear: not mirrored", sx(pika, "down", 1, false) > 0)
+check("facing up standing, stepFlip set: NOT mirrored", sx(pika, "up", 0, true) > 0)
+check("facing right: mirrored at either phase",
+  sx(pika, "right", 0, false) < 0 and sx(pika, "right", 1, false) < 0)
+check("facing left: never mirrored",
+  sx(pika, "left", 0, false) > 0 and sx(pika, "left", 1, false) > 0)
+
+check("standing holds the STAND frame", frameOf(pika, "down", 0, true) == 0,
+  frameOf(pika, "down", 0, true))
+check("stepping picks the WALK frame", frameOf(pika, "down", 1, false) == 3,
+  frameOf(pika, "down", 1, false))
+
 print("\n== the follower itself (regression) ==")
 -- a healthy lead the mod will pick up as the active follower
 h.game.save.party = { { species = "CHARMANDER", hp = 20, otId = 1,
