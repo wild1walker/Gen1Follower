@@ -1,5 +1,41 @@
 # Changelog
 
+## 1.3.0 - 2026-08-27
+
+### Added
+- **The Pokémon standing on the maps wear the follower's sheets too.** Gen 1
+  draws every Pokémon that is part of a map from one of five shared sheets:
+  a "monster", a "bird", a "fairy", a "seel" and the one Snorlax. One monster
+  is Mewtwo, a Meowth, a Machop and a Kangaskhan at once; one fairy is the
+  Pokémon Fan Club's Pikachu as readily as it is a Clefairy. So a save whose
+  follower came from this mod's own 251 sheets still walked past Pokémon in
+  the cart's generic art, and the two never matched.
+
+  Forty-nine map objects across Red, Blue and Yellow now draw from the same
+  sheet the mod would give that species as a follower, at the same
+  Pokédex-proportional size and in the same full colour — the Fan Club's
+  Pikachu and Seel, both sleeping Snorlax, Mewtwo, Articuno, Zapdos, Moltres,
+  Melanie's three, every Pokémon Center's Chansey, the pair in Mr. Fuji's
+  house, Fuchsia's Lapras and the rest. Each one is picked by the map object's
+  own name, so a Pidgey stays a Pidgey and a Pidgeot a Pidgeot even though the
+  cart draws both from the one bird.
+
+  Four Pokémon-shaped objects are deliberately left as they are. Bill's fused
+  form has no species — the game only says he "got combined with a #MON" — so
+  there is nothing to draw him as. The monster, bird and fairy in the
+  Copycat's room are dolls, and her joke is that they are. The Power Plant's
+  Voltorb and Electrode are not touched either: they wear the item-ball sprite
+  because they are pretending to be item balls, which is the trap.
+
+  On Gold the same thing happens one level up. Its overworld Pokémon already
+  name their species, but they borrow that species' shared party-menu icon for
+  art, so they get the follower sheet instead — and the two-frame bob is moved
+  onto the sheet's walking frame, since on a follower sheet the frame the
+  bounce would otherwise use is the mon facing away from you.
+
+  All of it is one switch, `MAP POKEMON`, on by default; turning it off puts
+  the cart's sprites back without a map reload.
+
 ## 1.2.1 - 2026-08-26
 
 ### Fixed
