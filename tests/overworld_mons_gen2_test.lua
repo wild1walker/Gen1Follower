@@ -1,4 +1,9 @@
-local h = dofile("tests/harness.lua")
+-- Finds the harness from THIS file's path rather than the working directory,
+-- and names its own generation rather than reading one out of the environment:
+-- the bundle repositories run each vendored mod's suites directly, from a
+-- directory of their choosing and with no variables set.
+local HERE = (arg and arg[0] or ""):match("^(.*)[/\\][^/\\]*$") or "."
+local h = assert(loadfile(HERE .. "/support/harness.lua"))(HERE .. "/..", 2)
 local fails, checks = 0, 0
 local function check(name, cond, extra)
   checks = checks + 1
@@ -27,12 +32,12 @@ print("\n== Gold: map POKeMON records ==")
 h.PikachuFollower.onMapEntered(h.game, ow)
 local sudo = h.sprites.SPRITE_POKEMON_1
 check("Sudowoodo leaves the shared party icon",
-  sudo.image == "./assets/sprites/follower_185.png", sudo.image)
+  sudo.image == (HERE .. "/../assets/sprites/follower_185.png"), sudo.image)
 check("...as a 6-frame sheet", sudo.frames == 6, sudo.frames)
 check("...tagged with its species", sudo.pokepcFollowerSpecies == "SUDOWOODO")
 check("Gyarados likewise",
   h.sprites.SPRITE_POKEMON_2.image
-    == "./assets/sprites/follower_130.png",
+    == (HERE .. "/../assets/sprites/follower_130.png"),
   h.sprites.SPRITE_POKEMON_2.image)
 check("a human sprite record is untouched",
   h.sprites.SPRITE_BEAUTY.image == "assets/generated/sprites/beauty.png"
