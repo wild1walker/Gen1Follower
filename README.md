@@ -63,6 +63,25 @@ Gen1Follower is a standalone build of the PokéPC Followers lineage, released un
 Every species ships one 16x96 sheet: six frames, standing and stepping, for
 each way the follower can face.
 
+Each one carries three opaque colours and nothing else — a black outline and
+two tones — which is the four-colour GBC shape the lineage this art comes from
+was drawn in. **The sheets are upstream's, byte for byte.** All 251 are
+identical to the ones in
+[PokéPC Followers](https://github.com/mfrtechconsult/PokePCFollowers), and the
+draw path hands them to the renderer untouched: no recolour, no palette pass,
+no shade remap.
+
+That is worth writing down because a few species read oddly against the rest of
+the game, and it looks like a bug in this mod rather than a choice in the art.
+Bulbasaur, Ivysaur and Venusaur are teal where the cart paints that line green
+(the engine assigns it `GREENMON`); Charmander is mostly its darker tone where
+the cart is orange; Snorlax is brown rather than blue-green. Nothing here
+decides any of that, and checking this mod for it is time spent in the wrong
+repository. **Deliberately kept as upstream drew them.** Changing one means
+editing the PNG in `assets/sprites/`, which is a fork of somebody else's art
+and carries the attribution in
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) with it.
+
 <p align="center">
   <img src="docs/frames.png" alt="six whole sprite sheets, all frames" width="420">
 </p>
