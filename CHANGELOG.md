@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.3.3 - 2026-08-28
+
+### Changed
+- **A dead option read is gone.** The draw path asked an option called
+  `color_mode` whether the answer was `"gbc"`, which would have sent the
+  full-colour follower sheets through the engine's four-shade remap instead of
+  past it.
+
+  Nothing has ever defined that key. Not this mod, which never listed it in
+  `options:define`, and not the engine, which has no such row anywhere in it.
+  The mod option API answers `nil` for a key it has no schema for, so the
+  comparison was false on every boot this mod has ever had and the branch was
+  dead the day it was written.
+
+  It is spelled as the constant it always evaluated to now, so it does not read
+  as a setting that went missing. **No behaviour changes** — this is the same
+  answer the function was already returning every time.
+
 ## 1.3.2 - 2026-08-27
 
 ### Fixed
