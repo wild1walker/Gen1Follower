@@ -70,8 +70,63 @@ local Assets = {
   register = function() end,
 }
 
+-- The engine's follower module.  onMapEntered is not a no-op: its SPAWN
+-- RULE is the thing two of the suites are about, so the placement half of
+-- src/world/PikachuFollower.lua (spawnCell, and what viaMapLoad does to it)
+-- is copied here rather than approximated.  Everything else about the
+-- engine's routine -- the Bill's House scene flags, opts.keepPikachu, the
+-- trail buffer -- is left out: this is a stand-in for where the follower
+-- LANDS, and claims nothing beyond that.
+--
+-- calls.onMapEntered records every argument it was handed, including the
+-- ones a wrapper might drop on the way through.
+local calls = { onMapEntered = {}, update = {} }
+
+local function harnessSpawnCell(ow)
+  local p = ow.player
+  local dx = p.facing == "left" and 1 or p.facing == "right" and -1 or 0
+  local dy = p.facing == "up" and 1 or p.facing == "down" and -1 or 0
+  local bx, by = p.cellX + dx, p.cellY + dy
+  local map = ow.map
+  if map and map.inBounds and map:inBounds(bx, by)
+     and map:isWalkableCell(bx, by) then
+    return bx, by
+  end
+  return p.cellX, p.cellY
+end
+
 local PikachuFollower = {
-  update = function() end, onMapEntered = function() end,
+  update = function(...)
+    calls.update[#calls.update + 1] = { n = select("#", ...), ... }
+  end,
+  onMapEntered = function(game, ow, opts, viaMapLoad)
+    calls.onMapEntered[#calls.onMapEntered + 1] =
+      { n = select("#", game, ow, opts, viaMapLoad),
+        game = game, ow = ow, opts = opts, viaMapLoad = viaMapLoad }
+    if not (ow and ow.player and ow.player.cellX) then return end
+    for i = #(ow.npcs or {}), 1, -1 do
+      if ow.npcs[i].pikachuFollower then table.remove(ow.npcs, i) end
+    end
+    for i = #(ow.entities or {}), 1, -1 do
+      if ow.entities[i].pikachuFollower then table.remove(ow.entities, i) end
+    end
+    if ow.harnessNoSpawn then return end
+    local x, y = harnessSpawnCell(ow)
+    -- a fresh map entry parks it ON the player instead, so it walks out of
+    -- the warp behind him rather than beside him (engine #863)
+    if viaMapLoad then x, y = ow.player.cellX, ow.player.cellY end
+    local npc = { pikachuFollower = true, passable = true,
+                  cellX = x, cellY = y, px = x * 16, py = y * 16,
+                  facing = ow.player.facing }
+    table.insert(ow.npcs, npc)
+    table.insert(ow.entities, npc)
+  end,
+  current = function(ow)
+    for _, npc in ipairs((ow or {}).npcs or {}) do
+      if npc.pikachuFollower then return npc end
+    end
+    return nil
+  end,
   talk = function() end, starterInParty = function() end,
   setShouldSpawn = function(fn) return function() return false end end,
 }
@@ -162,6 +217,7 @@ entry(mod)
 
 require = realRequire
 return { mod = mod, NPC = NPC, Gen2NPC = Gen2NPC, PikachuFollower = PikachuFollower,
+         calls = calls,
          sprites = spritesRegistry.store,
          drawn = drawn, SpriteRenderer = SpriteRenderer, game = game,
          options = options }
