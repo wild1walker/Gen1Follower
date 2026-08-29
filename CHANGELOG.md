@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.4.0 - 2026-08-29
+
+### Fixed
+- **Small POKéMON are not squashed into a blob any more.** The follower sheets
+  are 16x16, and that is the whole detail budget. `MIN_FOLLOWER_SCALE` was
+  `0.6875`, so every small species clamped to it and a 16px sprite was resampled
+  down to **11px** — five rows and five columns thrown away, taking 67 of
+  Bulbasaur's 138 opaque pixels with them.
+
+  What survived did not read as a small Bulbasaur, it read as a flat teal blob:
+  the legs merged into two black bars, the bulb lost its outline, and the
+  shading collapsed until the art looked like two colours rather than the three
+  it has. Every small species hit that floor, which is why the whole set looked
+  wrong rather than one sprite.
+
+  The floor is `1.0` now. Nothing is ever drawn below its native size. Big
+  species still grow — Onix 31px, Snorlax 17px — because scaling 16px **up** by
+  a whole number keeps every pixel, while scaling down has no detail to spend.
+  `FOLLOWER SIZE` cannot push below native either.
+
+  A test pins it: with the old floor it fails on `DIGLETT = 0.6875`.
+
 ## 1.3.3 - 2026-08-28
 
 ### Changed

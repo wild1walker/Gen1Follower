@@ -182,6 +182,57 @@ before = #h.drawn
 followerNPC.sprite:draw(80, 80, 0, 0, "down", 0, false)
 check("a fainted follower draws nothing at all", #h.drawn == before)
 
+print("\n== never smaller than the art ==")
+
+-- The sheets are 16x16 and that is the whole detail budget.  Scaling one UP by
+-- a whole number keeps every pixel; scaling DOWN deletes rows.  At the old
+-- 0.6875 floor a 16px sprite was resampled to 11px -- five rows and five
+-- columns gone, and 67 of Bulbasaur's 138 opaque pixels with them -- so every
+-- small POKeMON came out a flat blob with its legs merged and its outline
+-- broken.  Every small POKeMON hit that floor, which is why it looked like the
+-- art was two-colour rather than mangled.
+-- The fixture ships no species records, and pokedexHeightMeters returns nil
+-- without one -- which makes followerVisualScale answer a flat 1 and any
+-- assertion about the floor vacuous.  So the heights go in first: the real
+-- Pokedex feet and inches, which is what the rule is computed from.
+do
+  local scaleOf = h.mod.exports.followerVisualScale
+  check("the mod publishes its size rule", type(scaleOf) == "function")
+
+  local HEIGHTS = {           -- dex number, feet, inches
+    BULBASAUR = { 1, 2, 4 }, CHARMANDER = { 4, 2, 0 }, SQUIRTLE = { 7, 1, 8 },
+    PIKACHU = { 25, 1, 4 },  DIGLETT = { 50, 0, 8 },  MAGIKARP = { 129, 2, 11 },
+    ONIX = { 95, 28, 10 },   SNORLAX = { 143, 6, 11 }, MEW = { 151, 1, 4 },
+  }
+  h.game.data.pokemon = h.game.data.pokemon or {}
+  for name, v in pairs(HEIGHTS) do
+    h.game.data.pokemon[name] =
+      { dex = v[1], dexEntry = { heightFt = v[2], heightIn = v[3] } }
+  end
+  -- and the rule is behind POKEDEX SIZES, which the harness ships off; with it
+  -- off followerVisualScale returns a flat 1 on its first line and every
+  -- assertion below would pass without measuring anything
+  local sizesWere = h.options.pokedex_follower_sizes
+  h.options.pokedex_follower_sizes = true
+
+  if type(scaleOf) == "function" then
+    -- the heights have to actually reach the rule, or everything below is
+    -- measuring the nil path again
+    check("a tall POKeMON scales up", (tonumber(scaleOf("ONIX")) or 1) > 1,
+          scaleOf("ONIX"))
+
+    local worst, worstAt = math.huge, nil
+    for name in pairs(HEIGHTS) do
+      local sc = tonumber(scaleOf(name)) or 1
+      if sc < worst then worst, worstAt = sc, name end
+      check(name .. " draws on whole pixels", (16 * sc) % 1 == 0, 16 * sc)
+    end
+    check("nothing is drawn below its native 16px", worst >= 1,
+          tostring(worstAt) .. " = " .. tostring(worst))
+  end
+  h.options.pokedex_follower_sizes = sizesWere
+end
+
 print("\n== restore ==")
 h.mod.exports.restore()
 local afterRestore = build("ROUTE_16",

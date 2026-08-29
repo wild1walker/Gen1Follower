@@ -76,7 +76,19 @@ return function(mod)
   -- visually coherent with nearest-neighbour rendering.
   local POKEDEX_REFERENCE_METERS = 1.70
   local POKEDEX_SCALE_EXPONENT = 0.40
-  local MIN_FOLLOWER_SCALE = 0.6875
+  -- 1.0, and never below it: the sheets are 16x16 and that is all the detail
+  -- there is.  Drawing one smaller does not make a small POKeMON, it deletes
+  -- rows -- at the old 0.6875 floor a 16px sprite was resampled to 11px, which
+  -- throws away five rows and five columns and 67 of Bulbasaur's 138 opaque
+  -- pixels.  What survived read as a flat blob: the legs merged into two black
+  -- bars, the bulb lost its outline, and the shading collapsed until the whole
+  -- thing looked like two colours rather than the art it is.  Every small
+  -- POKeMON hit that floor, so every small POKeMON was mangled.
+  --
+  -- Big ones still grow, which is the half of POKEDEX SIZES that costs nothing
+  -- -- scaling 16px UP by a whole number keeps every pixel.  Down has no detail
+  -- budget to spend, so it is not spent.
+  local MIN_FOLLOWER_SCALE = 1.0
   local MAX_FOLLOWER_SCALE = 2.50
   local SCALE_QUANTUM = 0.0625
 
