@@ -230,6 +230,17 @@ do
     check("nothing is drawn below its native 16px", worst >= 1,
           tostring(worstAt) .. " = " .. tostring(worst))
   end
+  -- and with the row off -- which is how it ships -- every sprite is drawn at
+  -- the size it was drawn at, whatever the Pokedex says about the species
+  h.options.pokedex_follower_sizes = false
+  if type(scaleOf) == "function" then
+    local offAll = true
+    for name in pairs(HEIGHTS) do
+      if (tonumber(scaleOf(name)) or 1) ~= 1 then offAll = false end
+    end
+    check("POKEDEX SIZES off draws every sprite at 1.0", offAll)
+  end
+
   h.options.pokedex_follower_sizes = sizesWere
 end
 

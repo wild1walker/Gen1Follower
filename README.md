@@ -52,7 +52,7 @@ Gen1Follower is a standalone build of the PokéPC Followers lineage, released un
   with a #MON" — so he is Kabuto by choice, after the shell he wears in the
   anime. It is one word in `OVERWORLD_MON_SPECIES` if you disagree.
 * **Full-Color Overworld Graphics**: Sprites render with rich true-color graphics directly over 100% colorized overworld terrain tiles (grass, paths, dirt, water) with zero background artifacts. An unlit cave floor still darkens the follower with everything else — it goes to the same silhouette the player does until `FLASH`.
-* **Pokédex-Proportional Sizes**: Followers use the height recorded in their Pokédex entry. A progressive and capped scale keeps the smallest Pokémon at least 11 px tall while making very large Pokémon clearly more imposing, without changing collision or movement.
+* **Every Sprite At Its Own Size**: Followers are drawn at the size their art was drawn at, which is what all 251 sheets are made for. `POKEDEX SIZES` is an opt-in row that scales each one from its Pokédex height instead, making very large Pokémon more imposing — and nothing is ever drawn below native size either way, because shrinking a 16px sprite deletes rows rather than making a small Pokémon. Neither changes collision or movement.
 * **Smooth Movement Mechanics**:
   * Smooth 1-tile trailing behind the player.
   * In-place turning (no teleporting or jumping tiles when turning around).
@@ -131,10 +131,22 @@ The manifest targets both `gen1` and `gen2`; no second Gold-specific copy of the
   <code>main.lua</code> applied to that Pokémon's Pokédex height.</i>
 </p>
 
-`POKEDEX SIZES` enables or disables proportional follower sizes. `FOLLOWER SIZE`
-adjusts the result globally from 75% to 125%. The default 100% setting uses the
-Pokédex-derived scale. Only the visual sprite changes: followers still occupy one
-logical map cell and retain their normal movement and interactions.
+**`POKEDEX SIZES` ships OFF, and every follower is drawn at the size its art
+was drawn at.** All 251 sheets are 16x16, so at 1.0 each sprite is exactly what
+its artist made and reads the way they meant it to.
+
+Turning it on scales each follower from its Pokédex height, which is a real
+choice with a real cost: a proportional Onix is worth seeing, but it is bought
+by making everything else relative to it, and the small end of the Pokédex has
+no pixels to spare. That is a preference rather than a default.
+
+Either way **nothing is ever drawn below 1.0**. Scaling a 16px sprite up by a
+whole number keeps every pixel; scaling it down deletes rows, and there is no
+detail budget under native size to spend. `FOLLOWER SIZE` adjusts the result
+from 75% to 125% and cannot push below native either.
+
+Only the visual sprite changes: followers still occupy one logical map cell and
+retain their normal movement and interactions.
 
 ---
 

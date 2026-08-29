@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.5.0 - 2026-08-29
+
+### Changed
+- **`POKEDEX SIZES` ships OFF.** Every follower is now drawn at the size its
+  art was drawn at. All 251 sheets are 16x16, so at 1.0 each sprite is exactly
+  what its artist made.
+
+  Proportional sizing is still one row away, and still worth having — a
+  Pokédex-scaled Onix is a good thing to see. But it is bought by making
+  everything else relative to it, and that is a preference rather than the
+  shipping state. 1.4.0 stopped it from mangling small species; this stops it
+  from being the default anyone has to discover.
+
+  Nothing is ever drawn below 1.0 either way.
+
 ## 1.4.0 - 2026-08-29
 
 ### Fixed
