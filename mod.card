@@ -2,7 +2,7 @@
   "title": "Gen1Follower",
   "summary": "All 251 Gen 1 and Gen 2 overworld followers with Gold, Crystal 251 and voxel/tilt compatibility.",
   "author": "wild1walker",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "tags": [
     "graphics",
     "followers",
@@ -22,7 +22,7 @@
     "Gen1Recomp 0.1.86+ sandbox-compatible bootstrap and scoped asset paths",
     "Map Pokémon drawn from the same 251 sheets, not the cart's shared ones"
   ],
-  "description": "All 251 Gen 1 and Gen 2 overworld followers with Crystal 251 and Dramatic Shape voxel/tilt compatibility for Red, Blue, Yellow, and Gold. Version 1.6.1 takes a square outline off the character on the way into a battle: the rectangle a full-colour sprite keeps out of the colorize pass was a pixel wider than the sprite, so a ring of background stayed uncolorized and the battle wipe made it visible. On top of 1.6.0's map Pokémon culled off the edge of the screen and 1.5.1's follower landing in the right square out of a door.",
+  "description": "All 251 Gen 1 and Gen 2 overworld followers with Crystal 251 and Dramatic Shape voxel/tilt compatibility for Red, Blue, Yellow, and Gold. Version 1.6.2 stops a full-colour sprite marking itself out of the colorize pass anywhere but the world canvas: during a battle transition the same draw runs with the UI pass current, where a bundle's theme rings every marked rectangle with a black skirt and the ring lands round the character's head. On top of 1.6.1's exempt rectangle staying inside its sprite and 1.6.0's map Pokemon culled off the edge of the screen.",
   "credits": [
     {
       "who": "Antigravity & gamecorner33",

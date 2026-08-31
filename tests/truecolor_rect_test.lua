@@ -93,6 +93,42 @@ do
   check("a 4x4 does", rectFor(72, 96, 4, 4) ~= nil)
 end
 
+print("== and only in the pass the mark is for ==")
+do
+  -- A trueColor mark says "leave this rectangle out of the colorize pass",
+  -- which is a sentence about the WORLD canvas.  The same draw runs with the
+  -- UI pass current during a battle transition, and a UI-pass mark is a
+  -- different animal: Gen1WildUI's theme paints a one-pixel black skirt round
+  -- every UI-pass rect, so a UI-pass mark from a sprite is a black ring drawn
+  -- round a character.  Reported as exactly that, round the player's head, on
+  -- the way into a battle.
+  local marks = h.mod.exports.marksTrueColor
+  check("the gate is exported", type(marks) == "function")
+
+  local PaletteFX = h.PaletteFX
+  local current
+  PaletteFX.spriteRedrawPassActive = function() return current == "world" end
+  local colour, plain = { trueColor = true }, { trueColor = false }
+
+  current = "world"
+  check("a full-colour sprite marks in the world pass", marks(colour))
+  check("a four-shade one never marks at all", not marks(plain))
+
+  current = "ui"
+  check("and does NOT mark in the UI pass -- the reported case",
+    not marks(colour))
+
+  current = nil
+  check("nor between passes, where the engine would drop it anyway",
+    not marks(colour))
+
+  -- An engine too old to answer keeps the old behaviour: the question is new,
+  -- the mark is not, and losing it silently would be a worse trade than the
+  -- ring it is here to stop.
+  PaletteFX.spriteRedrawPassActive = nil
+  check("an engine that cannot answer still marks", marks(colour))
+end
+
 print(("\n%d/%d checks passed%s  (Gen1Follower trueColor rect)")
   :format(checks - fails, checks, fails > 0 and (", " .. fails .. " FAILURES") or ""))
 os.exit(fails == 0 and 0 or 1)

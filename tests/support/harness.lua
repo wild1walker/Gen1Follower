@@ -217,6 +217,9 @@ entry(mod)
 
 require = realRequire
 return { mod = mod, NPC = NPC, Gen2NPC = Gen2NPC, PikachuFollower = PikachuFollower,
+         -- handed out so a case can drive the render pass: which one is
+         -- current decides whether a full-colour sprite marks at all
+         PaletteFX = PaletteFX,
          calls = calls,
          sprites = spritesRegistry.store,
          drawn = drawn, SpriteRenderer = SpriteRenderer, game = game,

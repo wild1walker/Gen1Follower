@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.6.2
+
+- **A full-colour sprite no longer marks itself out of the colorize pass
+  outside the world canvas.** That mark says "leave this rectangle unshaded",
+  which is a sentence about the world canvas — where the sprite is drawn and
+  where the pass would otherwise read its colours as four shades. The same
+  draw runs with the **UI** pass current during a battle transition, and a
+  UI-pass mark is a different animal: Gen1WildUI's theme rings every UI-pass
+  rectangle with a one-pixel black skirt, so a UI-pass mark from a sprite is a
+  black ring drawn round a character. Reported as a white box with a black
+  outline round the player's head on the way into a battle, in `DARK` — the
+  only theme that paints a skirt at all.
+
+  The theme's own comment predicted this exactly: *"a world-pass mark is the
+  follower and the map's characters … a black skirt would be a black outline
+  drawn round a character on a lit map."* It gates on the pass for that reason,
+  and its gate cannot help when the sprite arrives in the other pass.
+
+  An engine too old to answer which pass is running keeps the old behaviour —
+  the question is new, the mark is not.
+
 ## 1.6.1
 
 - **A black square outline no longer forms around the character on the way into
