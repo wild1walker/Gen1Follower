@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.6.0
+
+Gen1WildQOL carried this as an overlay while it was ahead of a release here; it
+shipped in the bundle's 1.27.0. Same code, in the mod that owns it.
+
+- **A map POKéMON whose cell is off the visible area is culled.** The mark-only
+  branch does not draw into the world canvas: it queues a post-zone redraw,
+  which the renderer replays in *screen* space. So a sprite outside the game
+  screen was painted into the black beside it, floating next to the picture
+  instead of being clipped with everything else.
+
 ## 1.5.1 - 2026-08-29
 
 ### Fixed
