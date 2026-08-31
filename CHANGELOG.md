@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.6.1
+
+- **A black square outline no longer forms around the character on the way into
+  a battle.** A full-colour overworld sprite marks a rectangle to be re-blitted
+  raw, out of the colorize pass. `Renderer.scissorClamped` rounds every zone
+  *outward* on purpose — so two SGB zones share an edge rather than letting the
+  letterbox show through between them — and this rectangle was rounded outward
+  here as well, so it ended up a pixel or more proud of the sprite on every
+  side. That margin is background, and background left out of the colorize pass
+  is invisible until something changes the ground: a battle wipes the screen,
+  the ground goes, the ring stays, and it reads as an outline around the
+  character.
+
+  The rectangle now rounds inward and insets one further, so it is a subset of
+  the sprite and the widest it can round back out to is the sprite's own edge.
+  The pixel given back is the sprite's outermost ring, which is its black
+  outline — the one colour the pass has nothing to do to.
+
+  `ADVANCED` only, because `honorsTrueColor()` is `PaletteFX.mode == "redpp"`
+  and nothing else splices these rectangles at all; and `LIGHT` only, because
+  the dark path draws straight onto the world canvas and never marks one.
+
+`tests/truecolor_rect_test.lua` holds the invariant — the rectangle is inside
+the sprite, at whole and fractional anchors and at every scale — and a sprite
+too small to inset asks for nothing rather than for an inside-out rectangle.
+
 ## 1.6.0
 
 Gen1WildQOL carried this as an overlay while it was ahead of a release here; it

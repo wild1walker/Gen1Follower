@@ -15,6 +15,7 @@ local suites = {
   { file = "overworld_mons_test.lua", name = "map POKeMON, Gen 1" },
   { file = "overworld_mons_gen2_test.lua", name = "map POKeMON, Gold" },
   { file = "follower_placement_test.lua", name = "where the follower lands" },
+  { file = "truecolor_rect_test.lua", name = "the trueColor rect" },
 }
 
 local lua = arg and arg[-1] or "lua5.4"

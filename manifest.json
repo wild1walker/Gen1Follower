@@ -1,7 +1,7 @@
 {
   "id": "Gen1Follower",
   "name": "Gen1Follower",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "entry": "main_sandbox.lua",
   "api": 2,
   "games": [
