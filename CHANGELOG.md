@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.7.0
+
+- **The billboard hook finds every voxel fork, not three of them.** The list
+  it searched named `BATTLE_ART_VOXEL_FORK`, `DRAMALESS_SHAPE` and
+  `DRAMATIC_SHAPE`, so a player on potato voxel, `dramatic_shape_brick` or
+  `ds_fp_ceiling` got no billboarded follower and no reason why. All six are
+  searched now.
+
+  Inside the Gen1WildQOL bundle the question is asked once for every feature
+  that needs it, through `mod.voxel`, so the list lives in one place. The
+  inline list here is the fallback for this mod running standalone, where
+  there is no bundle runtime to ask -- and it is deliberately the same six.
+
+
 ## 1.6.2
 
 - **A full-colour sprite no longer marks itself out of the colorize pass
