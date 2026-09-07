@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.8.0
+
+- **Overworld POKéMON sprites are put back when the row goes off.** Swapping a
+  Gen 2 sprite definition over to a follower sheet edits a table the engine
+  keeps for the whole session, so the original `image`, `frames`, `walker` and
+  `trueColor` are stashed the first time each one is touched. Turning
+  `OVERWORLD MON SPRITES` off now restores **every** definition that was ever
+  changed rather than only the ones currently on screen — a hot reload or a
+  mid-session toggle used to leave the rest wearing follower art until the game
+  was restarted.
+
+- The Gold sprite path is otherwise unchanged; this release brings the mod's
+  own copy in line with the version the nightly channel has been running.
+
+
 ## 1.7.0
 
 - **The billboard hook finds every voxel fork, not three of them.** The list

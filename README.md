@@ -192,6 +192,14 @@ walks behind you, which on Yellow begins as that same Pikachu.
 
 Gen1Follower targets the Gen 2 engine directly. It uses Gold's follower spawn seam, native 251-species Pokédex, Gen 2 sprite registry, and split icon sheet/species registry. Followers are hidden correctly while biking or surfing, and the Party Menu `FOLLOW?` action uses the same shared hook as Gen 1.
 
+**Overworld POKéMON sprites are put back when the row goes off.** Swapping a
+Gen 2 sprite definition over to a follower sheet edits a table the engine keeps
+for the whole session, so the original `image`, `frames`, `walker` and
+`trueColor` are stashed the first time each one is touched. Turning
+`OVERWORLD MON SPRITES` off restores every definition that was ever changed,
+not just the ones on screen — a hot reload or a mid-session toggle used to
+leave the rest wearing follower art until the game was restarted.
+
 ## Walking with no follower
 
 `FOLLOW?` and `FOLLOWER` are the same menu entry in two states, and it is a
