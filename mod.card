@@ -2,7 +2,7 @@
   "title": "Gen1Follower",
   "summary": "All 251 Gen 1 and Gen 2 overworld followers with Gold, Crystal 251 and voxel/tilt compatibility.",
   "author": "wild1walker",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "tags": [
     "graphics",
     "followers",
@@ -22,7 +22,7 @@
     "Gen1Recomp 0.1.86+ sandbox-compatible bootstrap and scoped asset paths",
     "Map Pokémon drawn from the same 251 sheets, not the cart's shared ones"
   ],
-  "description": "All 251 Gen 1 and Gen 2 overworld followers with Crystal 251 and voxel/tilt compatibility for Red, Blue, Yellow, and Gold. Version 1.7.0 finds every voxel fork rather than three of them: the billboard hook searched only BATTLE_ART_VOXEL_FORK, DRAMALESS_SHAPE and DRAMATIC_SHAPE, so a player on potato voxel, dramatic_shape_brick or ds_fp_ceiling got a follower that was never billboarded and no reason why. All six are searched now, and inside the Gen1WildQOL bundle the question is asked once for every feature that needs it. On top of 1.6.2's mark that stays out of the UI pass and 1.6.1's exempt rectangle staying inside its sprite.",
+  "description": "All 251 Gen 1 and Gen 2 overworld followers with Crystal 251 and voxel/tilt compatibility for Red, Blue, Yellow, and Gold. Version 1.8.0 puts every swapped Gen 2 sprite back when OVERWORLD MON SPRITES goes off, not just the ones on screen: the definitions are a session-long engine table, so a hot reload or a mid-session toggle used to leave the rest wearing follower art until the game was restarted.",
   "credits": [
     {
       "who": "Antigravity & gamecorner33",
